@@ -15,6 +15,7 @@
       {
         imports = [
             ./module/git/default.nix
+            ./module/zsh/default.nix
         ];
 
         home = {

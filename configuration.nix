@@ -86,7 +86,12 @@
     isNormalUser = true;
     description = "Federico";
     extraGroups = [ "networkmanager" "wheel" ];
+    shell = pkgs.zsh;
   };
+
+  users.defaultUserShell = pkgs.zsh;
+
+  programs.zsh.enable = true;
 
   # Install firefox.
   programs.firefox.enable = true;
@@ -99,6 +104,10 @@
   environment.systemPackages = with pkgs; [
   #  vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
   #  wget
+  ];
+
+  environment.shells = with pkgs; [
+    zsh
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
