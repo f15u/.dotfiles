@@ -1,29 +1,14 @@
 {
-  config,
-  pkgs,
-  inputs,
-  ...
-}:
+  imports = [
+    ./module/git/default.nix
+    ./module/zsh/default.nix
+    ./module/vscodium/default.nix
+  ];
 
-{
-  home-manager = {
-    useGlobalPkgs = true;
-    useUserPackages = true;
+  home = {
+    username = "f15u";
+    homeDirectory = "/home/f15u";
 
-    users.f15u =
-      { pkgs, ... }:
-      {
-        imports = [
-            ./module/git/default.nix
-            ./module/zsh/default.nix
-        ];
-
-        home = {
-          username = "f15u";
-          homeDirectory = "/home/f15u";
-
-          stateVersion = "25.05";
-        };
-      };
+    stateVersion = "25.05";
   };
 }

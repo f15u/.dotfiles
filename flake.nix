@@ -19,7 +19,12 @@
       modules = [
         ./configuration.nix
         home-manager.nixosModules.home-manager
-        ./home.nix
+        {
+          home-manager.useGlobalPkgs = true;
+          home-manager.useUserPackages = true;
+
+          home-manager.users.f15u = import ./home.nix;
+        }
       ];
     };
   };
