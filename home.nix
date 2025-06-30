@@ -16,6 +16,8 @@
       spotify
       vesktop
 
+      gnumake
+
       nil
       alejandra
 
