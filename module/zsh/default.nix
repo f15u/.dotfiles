@@ -7,6 +7,7 @@
     history = {
       ignoreSpace = true;
       ignoreAllDups = true;
+      saveNoDups = true;
     };
 
     oh-my-zsh = {
