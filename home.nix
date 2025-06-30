@@ -3,6 +3,7 @@
     ./module/git/default.nix
     ./module/zsh/default.nix
     ./module/vscodium/default.nix
+    ./module/librewolf/default.nix
   ];
 
   home = {
@@ -10,6 +11,11 @@
     homeDirectory = "/home/f15u";
 
     packages = with pkgs; [
+      _1password-gui
+      slack
+      spotify
+      vesktop
+
       nil
       alejandra
 
