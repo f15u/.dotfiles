@@ -11,7 +11,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    # nur.url = "github:nix-community/NUR";
+    nur.url = "github:nix-community/NUR";
     nix-vscode-extensions.url = "github:nix-community/nix-vscode-extensions";
   };
 
@@ -19,7 +19,7 @@
     self,
     nixpkgs,
     home-manager,
-  outputs = { self, nixpkgs, home-manager, ... }@inputs: {
+    nur,
     nix-vscode-extensions,
     ...
   } @ inputs: {
@@ -27,9 +27,10 @@
       system = "x86_64-linux";
       specialArgs = {inherit inputs;};
 
-      specialArgs = { inherit inputs; };
+      # https://www.chrisportela.com/posts/home-manager-flake/
       modules = [
         ./configuration.nix
+        nur.modules.nixos.default
         {
           nixpkgs.overlays = [
             nix-vscode-extensions.overlays.default
@@ -39,6 +40,7 @@
         {
           home-manager.useGlobalPkgs = true;
           home-manager.useUserPackages = true;
+          home-manager.backupFileExtension = "bkp";
 
           home-manager.users.f15u = import ./home.nix;
         }
