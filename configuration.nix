@@ -8,6 +8,7 @@
   imports =
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
+      ./module/docker/default.nix
     ];
 
   # Bootloader.
@@ -87,7 +88,7 @@
   users.users.f15u = {
     isNormalUser = true;
     description = "Federico";
-    extraGroups = [ "networkmanager" "wheel" ];
+    extraGroups = ["networkmanager" "wheel" "docker"];
     shell = pkgs.zsh;
   };
 
