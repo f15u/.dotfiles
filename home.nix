@@ -22,6 +22,8 @@
       nil
       alejandra
 
+      kitty
+
       fragment-mono
     ];
 
