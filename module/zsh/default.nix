@@ -4,10 +4,17 @@
     enableCompletion = true;
     autosuggestion.enable = true;
     syntaxHighlighting.enable = true;
+
     history = {
       ignoreSpace = true;
       ignoreAllDups = true;
       saveNoDups = true;
+      expireDuplicatesFirst = true;
+    };
+
+    sessionVariables = {
+      COLORTERM = "truecolor";
+      TERM = "xterm-256color";
     };
 
     oh-my-zsh = {
