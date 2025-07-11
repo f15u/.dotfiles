@@ -26,6 +26,45 @@
         kb_rules = "";
       };
 
+      # Animation configuration (reduced times)
+      animations = {
+        enabled = true;
+        bezier = "myBezier, 0.05, 0.9, 0.1, 1.05";
+        animation = [
+          "windows, 1, 3, myBezier"
+          "windowsOut, 1, 3, default, popin 80%"
+          "border, 1, 5, default"
+          "borderangle, 1, 4, default"
+          "fade, 1, 3, default"
+          "workspaces, 1, 2, default"
+        ];
+      };
+
+      # General appearance settings
+      general = {
+        gaps_in = 1;
+        gaps_out = 1;
+        border_size = 1;
+        "col.active_border" = "rgba(33ccffee) rgba(00ff99ee) 45deg";
+        "col.inactive_border" = "rgba(595959aa)";
+        layout = "dwindle";
+        allow_tearing = false;
+      };
+
+      # Decoration settings
+      decoration = {
+        rounding = 6;
+        # drop_shadow = false;
+        # shadow_range = 4;
+        # shadow_render_power = 3;
+        # "col.shadow" = "rgba(1a1a1aee)";
+        blur = {
+          enabled = true;
+          size = 3;
+          passes = 1;
+        };
+      };
+
       # Keybindings
       bind = [
         # Switch workspaces with Super + [0-9]
@@ -60,6 +99,8 @@
         "SUPER, P, pseudo," # dwindle
         "SUPER, Q, killactive,"
         "SUPER, T, exec, kitty"
+
+        "ALT, F4, killactive,"
 
         # Move focus with Super + arrow keys
         "SUPER, left, movefocus, l"
