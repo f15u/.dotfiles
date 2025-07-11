@@ -16,7 +16,25 @@
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
-  nix.settings.experimental-features = [ "nix-command" "flakes" ];
+  nix = {
+    gc = {
+      automatic = true;
+      dates = "weekly";
+      options = "--delete-older-than 1w";
+    };
+
+    optimise = {
+      automatic = true;
+      dates = "weekly";
+    };
+
+    settings = {
+      auto-optimise-store = false;
+
+      experimental-features = [ "nix-command" "flakes" ];
+    };
+  };
+  
 
   networking.hostName = "nixos"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
