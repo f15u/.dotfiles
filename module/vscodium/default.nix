@@ -5,6 +5,13 @@
 
     profiles.default = {
       userSettings = {
+        "[svelte]" = {
+          "editor.defaultFormatter" = "svelte.svelte-vscode";
+        };
+        "[typescript]" = {
+          "editor.defaultFormatter" = "biomejs.biome";
+        };
+
         "editor.inlayHints.maximumLength" = 0;
         "editor.fontFamily" = "'Fragment Mono', 'Droid Sans Mono', 'monospace', monospace";
         "editor.fontSize" = 16;
@@ -73,6 +80,10 @@
         "workbench.sideBar.location" = "right";
 
         # Extensions
+        "biome.suggestInstallingGlobally" = false;
+
+        "svelte.enable-ts-plugin" = true;
+
         "nix.enableLanguageServer" = true;
         "nix.formatterPath" = "alejandra";
         "nix.serverSettings"."nil"."formatting"."command" = [
@@ -80,8 +91,13 @@
         ];
       };
 
-      extensions = with pkgs.vscode-extensions; [
+      extensions = with pkgs.vscode-marketplace; [
         jnoortheen.nix-ide
+        biomejs.biome
+        dbaeumer.vscode-eslint
+        svelte.svelte-vscode
+        orta.vscode-twoslash-queries
+        mk12.better-git-line-blame
       ];
     };
   };
