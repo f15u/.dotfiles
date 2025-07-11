@@ -2,6 +2,7 @@
   imports = [
     ./module/git/default.nix
     ./module/zsh/default.nix
+    ./module/direnv/default.nix
     ./module/vscodium/default.nix
     ./module/librewolf/default.nix
   ];
