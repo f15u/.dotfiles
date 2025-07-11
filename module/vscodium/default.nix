@@ -4,6 +4,7 @@
     package = pkgs.vscodium;
 
     profiles.default = {
+      # https://gist.github.com/danielroe/5ea82608dc680fe6c0179240803437ab
       userSettings = {
         "[svelte]" = {
           "editor.defaultFormatter" = "svelte.svelte-vscode";
@@ -33,6 +34,7 @@
             "color" = "#333";
           }
         ];
+        "editor.stickyScroll.enabled" = false;
         "editor.snippetSuggestions" = "none";
         "editor.suggest.showWords" = false;
         "editor.suggestSelection" = "first";
@@ -61,8 +63,11 @@
 
         "search.defaultViewMode" = "tree";
 
+        "terminal.integrated.allowChords" = false;
         "terminal.integrated.fontLigatures" = true;
         "terminal.integrated.gpuAcceleration" = "on";
+        "terminal.integrated.showExitAlert" = false;
+        "terminal.integrated.sendKeybindingsToShell" = false;
 
         "update.mode" = "none";
 

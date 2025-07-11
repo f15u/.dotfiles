@@ -17,6 +17,7 @@
   };
 
   environment.systemPackages = with pkgs; [
+    # dive
     docker-compose
     docker-buildx
   ];

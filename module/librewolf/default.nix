@@ -3,8 +3,21 @@
   config,
   ...
 }: {
+  # https://rycee.gitlab.io/home-manager/options.xhtml#opt-programs.firefox.profiles._name_.extensions.packages
+  #https://git.sr.ht/~rycee/configurations/tree/5b6582462725ef5938d9ae44b03e8c378d7a129f/item/user/firefox.nix?__goaway_challenge=meta-refresh&__goaway_id=11a59c125149b26ff81cacd4fb48770a&__goaway_referer=https%3A%2F%2Fwww.reddit.com%2F
+  # https://git.sr.ht/~johnhamelink/nix/tree/master/item/home/modules/librewolf/default.nix
   programs.librewolf = {
     enable = true;
+
+    # ls ~/.librewolf/native-messaging-hosts
+    # package = pkgs.librewolf.override {
+    #   # https://github.com/nix-community/home-manager/pull/5684
+    #   # https://github.com/nix-community/home-manager/issues/5190
+    #   # https://librewolf.net/docs/faq/#how-do-i-get-native-messaging-to-work-1
+    #   nativeMessagingHosts = with pkgs; [
+    #     _1password-gui
+    #   ];
+    # };
 
     nativeMessagingHosts = with pkgs; [
       _1password-gui
@@ -66,12 +79,16 @@
           "vertical-spacer"
           "urlbar-container"
           "customizableui-special-spring2"
+          # "save-to-pocket-button"
           "downloads-button"
           "fxa-toolbar-menu-button"
           "unified-extensions-button"
+          # "ublock0_raymondhill_net-browser-action"
           "_d634138d-c276-4fc8-924b-40a0ea21d284_-browser-action"
+          # "alltabs-button"
           "sidebar-button"
         ];
+        # "browser.uiCustomization.state" = builtins.readFile ./toolbar.json;
         "browser.urlbar.oneOffSearches" = false;
         "browser.urlbar.quicksuggest.enabled" = false;
         "browser.urlbar.scotchBonnet.enableOverride" = false;
@@ -140,6 +157,7 @@
         packages = with pkgs.nur.repos.rycee.firefox-addons; [
           refined-github
           onepassword-password-manager
+          # github-issue-link-status
         ];
       };
     };

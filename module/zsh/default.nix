@@ -1,3 +1,5 @@
+# https://www.reddit.com/r/NixOS/comments/1539s44/using_flakes_for_configurationnix/
+# https://github.com/novoid/nixos-config
 {
   programs.zsh = {
     enable = true;

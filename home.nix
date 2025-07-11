@@ -26,6 +26,7 @@
       kitty
 
       fragment-mono
+      # geist-font
     ];
 
     stateVersion = "25.05";
