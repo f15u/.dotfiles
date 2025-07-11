@@ -12,6 +12,7 @@
     homeDirectory = "/home/f15u";
 
     packages = with pkgs; [
+      claude-code
       mailspring
       slack
       spotify
