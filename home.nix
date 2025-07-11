@@ -12,7 +12,7 @@
     homeDirectory = "/home/f15u";
 
     packages = with pkgs; [
-      _1password-gui
+      mailspring
       slack
       spotify
       vesktop
