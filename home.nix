@@ -8,6 +8,7 @@
     ./module/claude/default.nix
     ./module/opencode/default.nix
     ./module/ai-skills/default.nix
+    ./module/hyprland/configuration/default.nix
   ];
 
   home = {

@@ -1,9 +1,20 @@
+{ pkgs, ... }:
+
 {
-  # Hyprland user configuration
+  # Import waybar configuration
+  imports = [
+    ./waybar/default.nix
+  ];
+
   wayland.windowManager.hyprland = {
     enable = true;
 
     settings = {
+      exec-once = [
+        "waybar"
+        "${pkgs.polkit_gnome}/libexec/polkit-gnome-authentication-agent-1"
+        "hyprsunset -t 4500"
+      ];
       # Monitor configuration for vertical stacking
       # 40" on top, 24" below (centered horizontally)
       monitor = [
@@ -14,8 +25,19 @@
       # Workspace assignment
       workspace = [
         "1,monitor:DP-2" # Workspace 1 on lower monitor (24")
-        "2,monitor:DP-1" # Workspace 2 on upper monitor (40")
+        "2,monitor:DP-2" # Workspace 2 on lower monitor (24")
+        "3,monitor:DP-2" # Workspace 3 on lower monitor (24")
+        "4,monitor:DP-2" # Workspace 4 on lower monitor (24")
+        "5,monitor:DP-1" # Workspace 5 on upper monitor (40")
+        "6,monitor:DP-1" # Workspace 6 on upper monitor (40")
+        "7,monitor:DP-1" # Workspace 7 on upper monitor (40")
+        "8,monitor:DP-1" # Workspace 8 on upper monitor (40")
       ];
+
+      misc = {
+        disable_hyprland_logo = true;
+        disable_splash_rendering = true;
+      };
 
       # Keyboard configuration for Italian layout
       input = {
@@ -28,16 +50,7 @@
 
       # Animation configuration (reduced times)
       animations = {
-        enabled = true;
-        bezier = "myBezier, 0.05, 0.9, 0.1, 1.05";
-        animation = [
-          "windows, 1, 3, myBezier"
-          "windowsOut, 1, 3, default, popin 80%"
-          "border, 1, 5, default"
-          "borderangle, 1, 4, default"
-          "fade, 1, 3, default"
-          "workspaces, 1, 2, default"
-        ];
+        enabled = false;
       };
 
       # General appearance settings
@@ -45,7 +58,7 @@
         gaps_in = 1;
         gaps_out = 1;
         border_size = 1;
-        "col.active_border" = "rgba(33ccffee) rgba(00ff99ee) 45deg";
+        "col.active_border" = "rgba(33ccffee)";
         "col.inactive_border" = "rgba(595959aa)";
         layout = "dwindle";
         allow_tearing = false;
@@ -53,13 +66,13 @@
 
       # Decoration settings
       decoration = {
-        rounding = 6;
+        rounding = 0;
         # drop_shadow = false;
         # shadow_range = 4;
         # shadow_render_power = 3;
         # "col.shadow" = "rgba(1a1a1aee)";
         blur = {
-          enabled = true;
+          enabled = false;
           size = 3;
           passes = 1;
         };
@@ -99,6 +112,7 @@
         "SUPER, P, pseudo," # dwindle
         "SUPER, Q, killactive,"
         "SUPER, T, exec, kitty"
+        "SUPER, L, exec, hyprctl dispatch exit"
 
         "ALT, F4, killactive,"
 
@@ -113,6 +127,15 @@
         "SUPER SHIFT, right, movewindow, r"
         "SUPER SHIFT, up, movewindow, u"
         "SUPER SHIFT, down, movewindow, d"
+        "SUPER SHIFT, F, togglefloating, exec, hyprctl dispatch fullscreen 1"
+        "SUPER ALT, up, fullscreen, 1"
+
+        # Workspace switching with Super + Ctrl + arrow keys
+        "SUPER CTRL, left, workspace, r-1"
+        "SUPER CTRL, right, workspace, r+1"
+
+        "ALT, Tab, cyclenext"
+        "ALT SHIFT, Tab, cyclenext, prev"
 
         # Media keys
         ", XF86AudioPlay, exec, playerctl play-pause"

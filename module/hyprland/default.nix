@@ -4,7 +4,7 @@
   # Enable Hyprland
   programs.hyprland = {
     enable = true;
-    xwayland.enable = true;
+    xwayland.enable = false;
   };
 
   # Add Hyprland Cachix
@@ -33,6 +33,10 @@
     slurp
     wl-clipboard
     mako
+    playerctl
+    hyprsunset
+    xdg-desktop-portal-hyprland
+    polkit_gnome
   ];
 
   # Enable required services
