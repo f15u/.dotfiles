@@ -1,12 +1,13 @@
 {
-  description = "NixOS system configuration";
+  nixConfig = {
+    extra-substituters = ["https://cache.numtide.com"];
+    extra-trusted-public-keys = ["niks3.numtide.com-1:DTx8wZduET09hRmMtKdQDxNNthLQETkc/yaX7M4qK0g="];
+  };
 
   inputs = {
-    # Specify the nixpkgs channel you want to use
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
     llm-agents.url = "github:numtide/llm-agents.nix";
 
-    # Optional: home-manager if you want to manage user configurations
     home-manager = {
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -22,7 +23,6 @@
   };
 
   outputs = {
-    self,
     nixpkgs,
     home-manager,
     nur,
@@ -31,7 +31,6 @@
     ...
   } @ inputs: {
     nixosConfigurations.nixos = nixpkgs.lib.nixosSystem {
-      system = "x86_64-linux";
       specialArgs = {inherit inputs;};
 
       # https://www.chrisportela.com/posts/home-manager-flake/
@@ -39,6 +38,7 @@
         ./configuration.nix
         nur.modules.nixos.default
         {
+          nixpkgs.hostPlatform = "x86_64-linux";
           nixpkgs.overlays = [
             nix-vscode-extensions.overlays.default
           ];
