@@ -9,7 +9,7 @@
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
       ./module/docker/default.nix
-      ./module/hyprland/default.nix
+      ./module/blocky/default.nix
     ];
 
   # Bootloader.
