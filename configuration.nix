@@ -1,12 +1,12 @@
 # Edit this configuration file to define what should be installed on
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
-
-{ config, pkgs, ... }:
-
 {
-  imports =
-    [ # Include the results of the hardware scan.
+  config,
+  pkgs,
+  ...
+}: {
+  imports = [
       ./hardware-configuration.nix
       ./module/docker/default.nix
       ./module/pipewire/default.nix
@@ -15,13 +15,14 @@
 
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
+  boot.loader.systemd-boot.configurationLimit = 5;
   boot.loader.efi.canTouchEfiVariables = true;
 
   nix = {
     gc = {
       automatic = true;
       dates = "weekly";
-      options = "--delete-older-than 1w";
+      options = "--delete-older-than 7d";
     };
 
     optimise = {
@@ -32,9 +33,10 @@
     settings = {
       auto-optimise-store = false;
 
-      experimental-features = [ "nix-command" "flakes" ];
+      experimental-features = ["nix-command" "flakes"];
 
       download-buffer-size = 536870912; # 512MB
+      trusted-users = ["root" "f15u"];
     };
   };
 
@@ -66,13 +68,9 @@
     LC_TIME = "it_IT.UTF-8";
   };
 
-  # Enable the X11 windowing system.
-  # You can disable this if you're only using the Wayland session.
-  services.xserver.enable = true;
-
-  # Enable the KDE Plasma Desktop Environment.
   services.displayManager.sddm.enable = true;
-  services.desktopManager.plasma6.enable = false;
+  services.displayManager.sddm.wayland.enable = true;
+  services.desktopManager.plasma6.enable = true;
 
   # Configure keymap in X11
   services.xserver.xkb = {
@@ -85,6 +83,25 @@
 
   # Enable CUPS to print documents.
   services.printing.enable = false;
+
+  # Enable GNOME Keyring for credential storage
+  services.gnome.gnome-keyring.enable = true;
+
+  # Enable PAM services for keyring
+  security.pam.services.login.enableGnomeKeyring = true;
+
+  # Enable xdg desktop portal for screensharing
+  xdg.portal = {
+    enable = true;
+    wlr.enable = true;
+    xdgOpenUsePortal = true;
+
+    extraPortals = with pkgs; [
+      kdePackages.xdg-desktop-portal-kde
+      xdg-desktop-portal-gtk
+      xdg-desktop-portal-wlr
+    ];
+  };
 
   # Enable touchpad support (enabled default in most desktopManager).
   # services.xserver.libinput.enable = true;
@@ -133,12 +150,11 @@
   # Or disable the firewall altogether.
   # networking.firewall.enable = false;
 
-  # This value determines the NixOS release from which the default
+  # This value determines the NixOS release from which default
   # settings for stateful data, like file locations and database versions
   # on your system were taken. It‘s perfectly fine and recommended to leave
-  # this value at the release version of the first install of this system.
-  # Before changing this value read the documentation for this option
-  # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
+  # this value at the release version of first install of this system.
+  # Before changing this value read the documentation (in particular,
+  # about ‘nixos-rebuild switch’ command).
   system.stateVersion = "25.05"; # Did you read the comment?
-
 }
