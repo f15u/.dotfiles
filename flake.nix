@@ -14,6 +14,11 @@
 
     nur.url = "github:nix-community/NUR";
     nix-vscode-extensions.url = "github:nix-community/nix-vscode-extensions";
+
+    ai-skills = {
+      url = "github:f15u/ai-skills";
+      flake = false;
+    };
   };
 
   outputs = {
@@ -22,6 +27,7 @@
     home-manager,
     nur,
     nix-vscode-extensions,
+    llm-agents,
     ...
   } @ inputs: {
     nixosConfigurations.nixos = nixpkgs.lib.nixosSystem {

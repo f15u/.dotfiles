@@ -5,7 +5,9 @@
     ./module/direnv/default.nix
     ./module/vscodium/default.nix
     ./module/librewolf/default.nix
+    ./module/claude/default.nix
     ./module/opencode/default.nix
+    ./module/ai-skills/default.nix
   ];
 
   home = {
@@ -13,7 +15,6 @@
     homeDirectory = "/home/f15u";
 
     packages = with pkgs; [
-      claude-code
       mailspring
       slack
       spotify
