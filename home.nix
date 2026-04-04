@@ -27,6 +27,8 @@
 
       kitty
 
+      gnupg
+
       proton-pass
     ];
 
