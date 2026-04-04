@@ -48,6 +48,9 @@
           home-manager.useGlobalPkgs = true;
           home-manager.useUserPackages = true;
           home-manager.backupFileExtension = "bkp";
+          home-manager.extraSpecialArgs = {
+            inherit inputs;
+          };
 
           home-manager.users.f15u = import ./home.nix;
         }
