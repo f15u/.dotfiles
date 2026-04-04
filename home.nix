@@ -27,6 +27,8 @@
 
       kitty
 
+      nerd-fonts.commit-mono
+
       gnupg
 
       proton-pass
