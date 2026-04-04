@@ -1,15 +1,23 @@
 {
   nixConfig = {
-    extra-substituters = ["https://cache.numtide.com"];
-    extra-trusted-public-keys = ["niks3.numtide.com-1:DTx8wZduET09hRmMtKdQDxNNthLQETkc/yaX7M4qK0g="];
+    extra-substituters = [
+      "https://install.determinate.systems"
+      "https://cache.numtide.com"
+    ];
+    extra-trusted-public-keys = [
+      "cache.flakehub.com-3:hJuILl5sVK4iKm86JzgdXW12Y2Hwd5G07qKtHTOcDCM="
+      "niks3.numtide.com-1:DTx8wZduET09hRmMtKdQDxNNthLQETkc/yaX7M4qK0g="
+    ];
   };
 
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+    nixpkgs.url = "https://flakehub.com/f/NixOS/nixpkgs/0.2511";
+    determinate.url = "https://flakehub.com/f/DeterminateSystems/determinate/*";
+
     llm-agents.url = "github:numtide/llm-agents.nix";
 
     home-manager = {
-      url = "github:nix-community/home-manager";
+      url = "https://flakehub.com/f/nix-community/home-manager/0.2511";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
@@ -28,6 +36,7 @@
     nur,
     nix-vscode-extensions,
     llm-agents,
+    determinate,
     ...
   } @ inputs: {
     nixosConfigurations.nixos = nixpkgs.lib.nixosSystem {
@@ -36,6 +45,7 @@
       # https://www.chrisportela.com/posts/home-manager-flake/
       modules = [
         ./configuration.nix
+        determinate.nixosModules.default
         nur.modules.nixos.default
         {
           nixpkgs.hostPlatform = "x86_64-linux";
