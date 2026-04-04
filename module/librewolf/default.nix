@@ -154,8 +154,7 @@
         "network.http.altsvc.oe" = true;
         "network.http.http3.enabled" = true;
         "network.trr.custom_uri" = "https://dns.nextdns.io/cccfa6";
-        "network.trr.mode" = 5; # STRICT = 3; DEFAULT = 5
-        "network.trr.mode" = 3; # Strict
+        "network.trr.mode" = 3; # STRICT = 3; DEFAULT = 5
         "network.trr.uri" = "https://dns.nextdns.io/cccfa6";
 
         "permissions.default.geo" = 2; # UNKNOWN = 0; ALLOW = 1; DENY = 2; PROMPT = 3;
