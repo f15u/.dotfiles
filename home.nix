@@ -15,7 +15,6 @@
     homeDirectory = "/home/f15u";
 
     packages = with pkgs; [
-      mailspring
       slack
       spotify
       vesktop
