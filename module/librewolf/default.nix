@@ -6,9 +6,6 @@
   programs.librewolf = {
     enable = true;
 
-    nativeMessagingHosts = with pkgs; [
-      _1password-gui
-    ];
 
     policies = {
       Certificates = {
@@ -140,6 +137,7 @@
         packages = with pkgs.nur.repos.rycee.firefox-addons; [
           refined-github
           onepassword-password-manager
+          proton-pass
         ];
       };
     };

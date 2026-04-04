@@ -8,7 +8,6 @@
   imports =
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
-      ./module/1password/default.nix
       ./module/docker/default.nix
       ./module/hyprland/default.nix
     ];

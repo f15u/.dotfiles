@@ -26,7 +26,7 @@
 
       kitty
 
-      fragment-mono
+      proton-pass
     ];
 
     stateVersion = "25.05";
