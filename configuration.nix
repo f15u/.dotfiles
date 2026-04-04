@@ -149,6 +149,8 @@
   # $ nix search wget
   environment.systemPackages = with pkgs; [
     git
+
+    nixd
   ];
 
   environment.shells = with pkgs; [
