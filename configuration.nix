@@ -18,6 +18,12 @@
   boot.loader.systemd-boot.configurationLimit = 5;
   boot.loader.efi.canTouchEfiVariables = true;
 
+  boot.kernelParams = [
+    "nvidia-drm.modeset=1"
+    "nvidia-drm.fbdev=1"
+    "nvidia.NVreg_EnablePageAttributeTable=1"
+  ];
+
   nix = {
     gc = {
       automatic = true;
@@ -115,6 +121,22 @@
   };
 
   users.defaultUserShell = pkgs.zsh;
+
+  hardware.graphics = {
+    enable = true;
+    enable32Bit = true;
+  };
+
+  # Enable NVIDIA drivers
+  services.xserver.videoDrivers = ["nvidia"];
+  hardware.nvidia = {
+    modesetting.enable = true;
+    powerManagement.enable = false;
+    powerManagement.finegrained = false;
+    open = true; # Use proprietary drivers for better compatibility
+    nvidiaSettings = true; # Enable nvidia-settings
+    package = config.boot.kernelPackages.nvidiaPackages.beta;
+  };
 
   programs.zsh.enable = true;
 
