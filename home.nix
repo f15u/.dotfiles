@@ -5,7 +5,7 @@
     ./module/direnv/default.nix
     ./module/vscodium/default.nix
     ./module/librewolf/default.nix
-    ./module/hyprland/user.nix
+    ./module/opencode/default.nix
   ];
 
   home = {

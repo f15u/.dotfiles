@@ -4,6 +4,7 @@
   inputs = {
     # Specify the nixpkgs channel you want to use
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+    llm-agents.url = "github:numtide/llm-agents.nix";
 
     # Optional: home-manager if you want to manage user configurations
     home-manager = {
