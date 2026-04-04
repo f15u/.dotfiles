@@ -1,0 +1,11 @@
+@-moz-document url-prefix(view-source:) {
+  #viewsource {
+    font-family: 'CommitMono Nerd Font', monospace, -moz-fixed !important;
+  }
+}
+
+/* Hide sidebar customize button and separator */
+#sidebar-main > moz-button,
+#sidebar-main > hr {
+  display: none !important;
+}
