@@ -1,17 +1,32 @@
-{
+{pkgs, ...}: {
   programs.git = {
     enable = true;
-    userName = "Federico Biccheddu";
-    userEmail = "service+git@f15u.dev";
 
-    extraConfig = {
+    signing = {
+      key = "CE0B5314D1D1A757";
+      signByDefault = true;
+    };
+
+    settings = {
+      user = {
+        name = "Federico Biccheddu";
+        email = "service+git@f15u.dev";
+      };
+
       init.defaultBranch = "main";
       pull.ff = true;
       pull.rebase = true;
       rebase.autosquash = true;
       help.autoCorrect = "prompt";
     };
+  };
 
-    delta.enable = true;
+  programs.gpg.enable = true;
+
+  services.gpg-agent = {
+    enable = true;
+    pinentry = {
+      package = pkgs.pinentry-qt;
+    };
   };
 }
