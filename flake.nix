@@ -11,13 +11,13 @@
   };
 
   inputs = {
-    nixpkgs.url = "https://flakehub.com/f/NixOS/nixpkgs/0.2511";
+    nixpkgs.url = "https://flakehub.com/f/NixOS/nixpkgs/0.1";
     determinate.url = "https://flakehub.com/f/DeterminateSystems/determinate/*";
 
     llm-agents.url = "github:numtide/llm-agents.nix";
 
     home-manager = {
-      url = "https://flakehub.com/f/nix-community/home-manager/0.2511";
+      url = "https://flakehub.com/f/nix-community/home-manager/0.1";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
