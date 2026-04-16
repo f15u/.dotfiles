@@ -17,7 +17,7 @@
     packages = with pkgs; [
       slack
       spotify
-      vesktop
+      discord
 
       gnumake
 
