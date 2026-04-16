@@ -74,9 +74,9 @@
     LC_TIME = "it_IT.UTF-8";
   };
 
-  services.displayManager.sddm.enable = true;
-  services.displayManager.sddm.wayland.enable = true;
-  services.desktopManager.plasma6.enable = true;
+  services.xserver.enable = true;
+  services.xserver.displayManager.lightdm.enable = true;
+  services.xserver.desktopManager.cinnamon.enable = true;
 
   # Configure keymap in X11
   services.xserver.xkb = {
@@ -90,12 +90,6 @@
   # Enable CUPS to print documents.
   services.printing.enable = false;
 
-  # Enable GNOME Keyring for credential storage
-  services.gnome.gnome-keyring.enable = true;
-
-  # Enable PAM services for keyring
-  security.pam.services.login.enableGnomeKeyring = true;
-
   # Enable xdg desktop portal for screensharing
   xdg.portal = {
     enable = true;
@@ -103,14 +97,10 @@
     xdgOpenUsePortal = true;
 
     extraPortals = with pkgs; [
-      kdePackages.xdg-desktop-portal-kde
       xdg-desktop-portal-gtk
       xdg-desktop-portal-wlr
     ];
   };
-
-  # Enable touchpad support (enabled default in most desktopManager).
-  # services.xserver.libinput.enable = true;
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.f15u = {
