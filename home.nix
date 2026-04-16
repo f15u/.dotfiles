@@ -31,6 +31,8 @@
       gnupg
 
       proton-pass
+
+      mgba
     ];
 
     stateVersion = "25.05";
