@@ -199,6 +199,7 @@
 
       extensions = {
         packages = with pkgs.nur.repos.rycee.firefox-addons; [
+          bitwarden
           canvasblocker
           consent-o-matic
           github-issue-link-status
