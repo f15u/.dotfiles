@@ -139,6 +139,7 @@
         "layers.acceleration.disabled" = true;
         "layers.acceleration.force-enabled" = true;
 
+        "media.autoplay.default" = 1;
         "media.hardwaremediakeys.enabled" = false;
         "media.hardware-video-decoding.enabled" = true;
         "media.hardware-video-decoding.force-enabled" = true;
