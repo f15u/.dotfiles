@@ -25,6 +25,13 @@
         };
       };
 
+      Permissions = {
+        Autoplay = {
+          Default = "block-audio-video";
+          Locked = true;
+        };
+      };
+
       Preferences = {
         "privacy.fingerprintingProtection" = {
           Value = false;
@@ -139,7 +146,8 @@
         "layers.acceleration.disabled" = true;
         "layers.acceleration.force-enabled" = true;
 
-        "media.autoplay.default" = 1;
+        "media.autoplay.default" = 5;
+        "media.autoplay.blocking_policy" = 2;
         "media.hardwaremediakeys.enabled" = false;
         "media.hardware-video-decoding.enabled" = true;
         "media.hardware-video-decoding.force-enabled" = true;
