@@ -197,6 +197,7 @@
         "webgl.disabled" = true;
 
         "widget.use-xdg-desktop-portal" = true;
+        "widget.gtk.native-emoji-dialog" = false;
         "widget.wayland-dmabuf-vaapi.enabled" = true;
       };
 
