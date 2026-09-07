@@ -2,10 +2,11 @@
   pkgs,
   config,
   ...
-}: {
+}:
+{
   programs.librewolf = {
     enable = true;
-
+    package = pkgs.librewolf-bin;
 
     policies = {
       Certificates = {
@@ -48,6 +49,7 @@
         "browser.contentblocking.category" = "strict";
         "browser.chrome.guess_favicon" = false;
         "browser.discovery.containers.enabled" = false;
+        "browser.fixup.alternate.enabled" = false;
         "browser.laterrun.bookkeeping.sessionCount" = 1;
         "browser.ml.enable" = false;
         "browser.ml.chat.enabled" = false;
@@ -100,13 +102,15 @@
           "_d634138d-c276-4fc8-924b-40a0ea21d284_-browser-action"
           "sidebar-button"
         ];
-        "browser.urlbar.autoFill" = false;
-        "browser.urlbar.autoFill.adaptiveHistory.enabled" = false;
+        "browser.urlbar.autoFill" = true;
+        "browser.urlbar.autoFill.adaptiveHistory.enabled" = true;
         "browser.urlbar.oneOffSearches" = false;
         "browser.urlbar.quicksuggest.enabled" = false;
         "browser.urlbar.scotchBonnet.enableOverride" = false;
         "browser.urlbar.showSearchSuggestionsFirst" = false;
         "browser.urlbar.suggest.engines" = false;
+        "browser.urlbar.suggest.history" = true;
+        "browser.urlbar.suggest.searches" = false;
         "browser.urlbar.suggest.topsites" = false;
 
         "cookiebanners.service.mode" = 2;
@@ -116,7 +120,7 @@
 
         "devtools.accessibility.enabled" = false;
 
-        "dom.ipc.processCount" = 8;
+        "dom.ipc.processCount" = 16;
         "dom.security.https_only_mode" = true;
         "dom.w3c_touch_events.enabled" = 0;
         "dom.webnotifications.enabled" = false;
@@ -136,14 +140,27 @@
         "geo.enabled" = false;
 
         "gfx.webrender.all" = true;
+        "gfx.webrender.compositor" = true;
+        "gfx.webrender.compositor.force-enabled" = true;
         "gfx.webrender.enabled" = true;
-        "gfx.webrender.software" = true;
+        "gfx.webrender.max-filter-ops-per-subpass" = 128;
+        "gfx.webrender.precise-shader-matching" = true;
 
+        "gfx.canvas.accelerated" = true;
+        "gfx.canvas.accelerated.cache-items" = 4096;
+        "gfx.canvas.accelerated.cache-size" = 512;
+        "gfx.content.azure.backends" = "skia";
+        "gfx.content.azure.skia-use-ctx-locks" = true;
+
+        "identity.fedcm.enabled" = false;
         "identity.fxaccounts.enabled" = false;
 
         "intl.locale.requested" = "en-GB,en-US";
 
-        "layers.acceleration.disabled" = true;
+        "keyword.enabled" = false;
+
+        "image.decode-immediately.enabled" = true;
+
         "layers.acceleration.force-enabled" = true;
 
         "media.autoplay.default" = 5;
@@ -168,7 +185,9 @@
 
         "permissions.default.geo" = 2; # UNKNOWN = 0; ALLOW = 1; DENY = 2; PROMPT = 3;
         "permissions.default.canvas" = 2; # DENY = 2
-        "privacy.fingerprintingProtection.overrides" = "+AllTargets,-CanvasImageExtractionPrompt,-CanvasExtractionBeforeUserInputIsBlocked,-CSSPrefersColorScheme,-FrameRate";
+        "permissions.default.persistent-storage" = 2; # DENY = 2, no prompt
+        "privacy.fingerprintingProtection.overrides" =
+          "+AllTargets,-CanvasImageExtractionPrompt,-CanvasExtractionBeforeUserInputIsBlocked,-CSSPrefersColorScheme,-FrameRate";
 
         "privacy.clearOnShutdown.cookies" = false;
         "privacy.clearOnShutdown.history" = false;
@@ -183,7 +202,13 @@
         "privacy.userContext.enabled" = false;
 
         "security.csp.reporting.enabled" = false;
+        # Route passkey (WebAuthn) handling to password-manager extensions
+        # (Bitwarden/1Password/Proton Pass) instead of the browser UI.
+        # No native platform authenticator exists on Linux; the "native ask"
+        # comes from the hardware-token dialog and the conditional-mediation
+        # autofill, both disabled here so only extensions can answer.
         "security.webauth.webauthn_enable_usbtoken" = false;
+        "security.webauthn.enable_conditional_mediation" = false;
 
         "sidebar.verticalTabs" = true;
         "signon.rememberSignons" = false;
@@ -194,7 +219,8 @@
 
         "view_source.wrap_long_lines" = true;
 
-        "webgl.disabled" = true;
+        "webgl.disabled" = false;
+        "webgl.enable-webgl2" = true;
 
         "widget.use-xdg-desktop-portal" = true;
         "widget.gtk.native-emoji-dialog" = false;
@@ -212,6 +238,7 @@
           canvasblocker
           consent-o-matic
           github-issue-link-status
+          # knockoff-amazon-brand-filter
           onepassword-password-manager
           react-devtools
           refined-github
