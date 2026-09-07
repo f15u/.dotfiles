@@ -1,7 +1,7 @@
-{pkgs, ...}: {
-  programs.vscode = {
+{ pkgs, ... }: {
+  programs.vscodium = {
     enable = true;
-    package = pkgs.vscodium;
+    mutableExtensionsDir = false;
 
     profiles.default = {
       userSettings = {
@@ -11,9 +11,11 @@
         "editor.experimentalGpuAcceleration" = "off";
         "editor.experimental.asyncTokenization" = true;
         # "editor.inlayHints.maximumLength" = 0;
-        "editor.fontFamily" = "'CommitMono Nerd Font', monospace";
+        # Term variant: arrows/box glyphs stay inside their cell (Mono overflows).
+        "editor.fontFamily" = "'IoskeleyMonoTerm Nerd Font Mono', monospace";
         "editor.fontSize" = 18;
-        "editor.fontLigatures" = "'ss01', 'ss02', 'ss03', 'ss04', 'ss05', 'cv02', 'cv03', 'cv06', 'cv07', 'cv09', 'cv11'";
+        # Ioskeley builds with noCvSs → no ss/cv features. Only calt + zero.
+        "editor.fontLigatures" = "'calt', 'zero'";
         "editor.inlayHints.enabled" = "offUnlessPressed";
         "editor.lineHeight" = 1.75;
         "editor.minimap.scale" = 1;
@@ -44,7 +46,8 @@
 
         "explorer.fileNesting.enabled" = true;
         "explorer.fileNesting.patterns" = {
-          "*.ts" = "\${capture}.test.ts, \${capture}.test-d.ts, \${capture}.spec.ts, \${capture}.spec-d.ts, \${capture}.bench.ts, \${capture}.js, \${capture}.typegen.ts";
+          "*.ts" =
+            "\${capture}.test.ts, \${capture}.test-d.ts, \${capture}.spec.ts, \${capture}.spec-d.ts, \${capture}.bench.ts, \${capture}.js, \${capture}.typegen.ts";
           "*.js" = "\${capture}.js.map, \${capture}.min.js, \${capture}.d.ts";
           "*.jsx" = "\${capture}.js";
           "*.tsx" = "\${capture}.ts, \${capture}.typegen.ts";
@@ -78,12 +81,13 @@
         "terminal.integrated.initialHint" = false;
         "terminal.integrated.allowChords" = false;
         "terminal.integrated.gpuAcceleration" = "on";
-        "terminal.integrated.fontFamily" = "'Liberation Mono', monospace";
+        "terminal.integrated.fontFamily" = "'IoskeleyMonoTerm Nerd Font Mono', monospace";
         "terminal.integrated.fontLigatures.enabled" = false;
         # "terminal.integrated.fontLigatures.featureSettings" = "'ss01', 'ss02', 'ss03', 'ss04', 'ss05', 'cv02', 'cv03', 'cv06', 'cv07', 'cv09', 'cv11'";
         "terminal.integrated.fontSize" = 16;
         "terminal.integrated.showExitAlert" = false;
         "terminal.integrated.stickyScroll.enabled" = false;
+        "terminal.integrated.suggest.enabled" = false;
 
         "telemetry.telemetryLevel" = "off";
         # "telemetry.enableCrashReporter" = false;
@@ -141,26 +145,24 @@
         # };
 
         "nix.enableLanguageServer" = true;
-        "nix.formatterPath" = "alejandra";
-        "nix.serverSettings"."nil"."formatting"."command" = [
-          "alejandra"
-        ];
 
         "orta.vscode-twoslash-queries.maxLength" = 9999;
 
         "svelte.enable-ts-plugin" = true;
       };
 
-      extensions = with pkgs.vscode-marketplace;
+      extensions =
+        with pkgs.open-vsx;
         [
           antfu.unocss
-          oxc.oxc-vscode
+          astro-build.astro-vscode
           # bmewburn.vscode-intelephense-client
           # bradlc.vscode-tailwindcss
           # dbaeumer.vscode-eslint
           # denoland.vscode-deno
           # dprint.dprint
           esbenp.prettier-vscode
+          github.github-vscode-theme
           jnoortheen.nix-ide
           matthewpi.caddyfile-support
           # matiasolivera.universe
@@ -168,16 +170,34 @@
           mkhl.direnv
           # monotykamary.vscode-aql
           # nefrob.vscode-just-syntax
-          orta.vscode-twoslash-queries
+          oxc.oxc-vscode
           pflannery.vscode-versionlens
           # runem.lit-plugin
           # svelte.svelte-vscode
           # thebearingedge.vscode-sql-lit
-          # typescriptteam.native-preview
+          unifiedjs.vscode-mdx
         ]
-        ++ (with pkgs.vscode-extensions; [
-          github.github-vscode-theme
-        ]);
+        ++ (with pkgs.vscode-marketplace; [
+          atoolz.htmx-vscode-toolkit # open-vsx missing
+          orta.vscode-twoslash-queries # open-vsx behind
+        ])
+      # ++ [
+      #   # nightly — nix-vscode-extensions cache stale, old VSIX purged from CDN
+      #   # manually pinned to current version; update hash periodically
+      #   (pkgs.vscode-utils.buildVscodeMarketplaceExtension {
+      #     mktplcRef = {
+      #       name = "native-preview";
+      #       publisher = "TypeScriptTeam";
+      #       version = "0.20260708.2";
+      #       sha256 = "sha256-oDt296OEoPd/gerUzpkjMLrrAM0LQ9+W/5KJWx3tBmY=";
+      #     };
+      #     meta = {
+      #       description = "TypeScript and JavaScript language support powered by the native TypeScript language server";
+      #       license = pkgs.lib.licenses.mit;
+      #     };
+      #   })
+      # ]
+      ;
     };
   };
 }
