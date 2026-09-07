@@ -11,7 +11,7 @@
   };
 
   inputs = {
-    nixpkgs.url = "https://flakehub.com/f/NixOS/nixpkgs/0.1";
+    nixpkgs.url = "https://flakehub.com/f/DeterminateSystems/nixpkgs-weekly/0.1";
     determinate.url = "https://flakehub.com/f/DeterminateSystems/determinate/*";
 
     llm-agents.url = "github:numtide/llm-agents.nix";
@@ -24,8 +24,16 @@
     nur.url = "github:nix-community/NUR";
     nix-vscode-extensions.url = "github:nix-community/nix-vscode-extensions";
 
-    ai-skills = {
-      url = "github:f15u/ai-skills";
+    # Ioskeley Mono Nerd Font. `latest/download` redirect → newest release,
+    # so `nix flake update ioskeley-mono*` bumps the font. Built in home.nix.
+    ioskeley-mono = {
+      url = "file+https://github.com/ahatem/IoskeleyMono/releases/latest/download/IoskeleyMono-NerdFont.zip";
+      flake = false;
+    };
+
+    # Term variant: terminal-tuned metrics. Used by kitty.
+    ioskeley-mono-term = {
+      url = "file+https://github.com/ahatem/IoskeleyMono/releases/latest/download/IoskeleyMono-Term-NerdFont.zip";
       flake = false;
     };
   };
@@ -39,6 +47,8 @@
     determinate,
     ...
   } @ inputs: {
+    formatter.x86_64-linux = nixpkgs.legacyPackages.x86_64-linux.nixfmt;
+
     nixosConfigurations.nixos = nixpkgs.lib.nixosSystem {
       specialArgs = {inherit inputs;};
 
