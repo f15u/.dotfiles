@@ -5,13 +5,16 @@
   config,
   pkgs,
   ...
-}: {
+}:
+{
   imports = [
-      ./hardware-configuration.nix
-      ./module/docker/default.nix
-      ./module/pipewire/default.nix
-      ./module/blocky/default.nix
-    ];
+    ./hardware-configuration.nix
+    ./module/docker/default.nix
+    ./module/pipewire/default.nix
+    ./module/blocky/default.nix
+    ./module/cinnamon/default.nix
+    ./module/claude/system.nix
+  ];
 
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
@@ -39,10 +42,16 @@
     settings = {
       auto-optimise-store = false;
 
-      experimental-features = ["nix-command" "flakes"];
+      experimental-features = [
+        "nix-command"
+        "flakes"
+      ];
 
       download-buffer-size = 536870912; # 512MB
-      trusted-users = ["root" "f15u"];
+      trusted-users = [
+        "root"
+        "f15u"
+      ];
     };
   };
 
@@ -78,6 +87,8 @@
   services.xserver.displayManager.lightdm.enable = true;
   services.xserver.desktopManager.cinnamon.enable = true;
 
+  services.gnome.gnome-online-accounts.enable = true;
+
   # Configure keymap in X11
   services.xserver.xkb = {
     layout = "it";
@@ -93,12 +104,10 @@
   # Enable xdg desktop portal for screensharing
   xdg.portal = {
     enable = true;
-    wlr.enable = true;
     xdgOpenUsePortal = true;
 
     extraPortals = with pkgs; [
       xdg-desktop-portal-gtk
-      xdg-desktop-portal-wlr
     ];
   };
 
@@ -106,7 +115,11 @@
   users.users.f15u = {
     isNormalUser = true;
     description = "Federico";
-    extraGroups = ["networkmanager" "wheel" "docker"];
+    extraGroups = [
+      "networkmanager"
+      "wheel"
+      "docker"
+    ];
     shell = pkgs.zsh;
   };
 
@@ -118,13 +131,12 @@
   };
 
   # Enable NVIDIA drivers
-  services.xserver.videoDrivers = ["nvidia"];
+  services.xserver.videoDrivers = [ "nvidia" ];
   hardware.nvidia = {
     modesetting.enable = true;
     powerManagement.enable = false;
     powerManagement.finegrained = false;
-    open = true; # Use proprietary drivers for better compatibility
-    nvidiaSettings = true; # Enable nvidia-settings
+    open = true; # Use open kernel modules (Turing+ supported)
     package = config.boot.kernelPackages.nvidiaPackages.beta;
   };
 
@@ -141,6 +153,8 @@
     git
 
     nixd
+
+    xclip
   ];
 
   environment.shells = with pkgs; [
@@ -173,4 +187,6 @@
   # Before changing this value read the documentation (in particular,
   # about ‘nixos-rebuild switch’ command).
   system.stateVersion = "25.05"; # Did you read the comment?
+
+  documentation.nixos.enable = false;
 }
