@@ -28,7 +28,7 @@ in
           --replace-fail 'Exec=AppRun' 'Exec=polypane'
 
         for icon in ${appimageContents}/usr/share/icons/hicolor/*/apps/polypane.png; do
-          size=$(echo "$icon" | grep -Po '\d+x\d+')
+          size=$(basename "$(dirname "$(dirname "$icon")")")
           install -m 444 -D "$icon" \
             "$out/share/icons/hicolor/$size/apps/polypane.png"
         done
