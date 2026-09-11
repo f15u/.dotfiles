@@ -3,7 +3,7 @@
   lib,
   ...
 }: let
-  version = "0.6.0";
+  version = "0.7.1";
   target = "x86_64-unknown-linux-gnu";
 
   # dlopen'd at run time, so absent from the binary's NEEDED entries and
@@ -24,7 +24,7 @@
 
     src = pkgs.fetchurl {
       url = "https://github.com/crmne/fastpotify/releases/download/v${version}/fastpotify-v${version}-${target}.tar.gz";
-      hash = "sha256-FXIuJZGBLQgwTzUD/7mx405zyHhhSBMP75yHfB4rCxI=";
+      hash = "sha256-Oc8i7k0IQYH83XKQrLVXjwi6Kl0qf8uuYhJPAnKNMWo=";
     };
 
     nativeBuildInputs = [pkgs.autoPatchelfHook pkgs.makeWrapper];
