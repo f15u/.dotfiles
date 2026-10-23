@@ -9,6 +9,13 @@
       # Slashed zero.
       font-feature = "zero";
 
+      # Free Ctrl+Enter for herdr (pane zoom). Ghostty defaults this chord to
+      # toggle_fullscreen; window fullscreen moves to Ctrl+Alt+Enter.
+      keybind = [
+        "ctrl+enter=unbind"
+        "ctrl+alt+enter=toggle_fullscreen"
+      ];
+
       # GitHub Dark Default (github-vscode-theme).
       background = "#0d1117";
       foreground = "#e6edf3";
