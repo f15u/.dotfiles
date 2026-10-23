@@ -1,7 +1,34 @@
-{ pkgs, ... }: {
+{ pkgs, ... }:
+let
+  # Eclipse list wrongly flags the genuine TypeScriptTeam.native-preview (EclipseFdn/publish-extensions#1133).
+  # Serve a pinned copy without that ID; every other entry stays enforced.
+  controlPort = "18741";
+  controlList = pkgs.runCommand "extension-control" { nativeBuildInputs = [ pkgs.jq ]; } ''
+    mkdir $out
+    jq '.malicious -= ["typescriptteam.native-preview"]' ${pkgs.fetchurl {
+      url = "https://raw.githubusercontent.com/EclipseFdn/publish-extensions/f008ca5e3845061a637be99ca2d53dcff5db474a/extension-control/extensions.json";
+      hash = "sha256-YxHf0kOgwtXNWTGyexOIoQwMq/lMfUdq1QpOOhKY4Dg=";
+    }} > $out/extensions.json
+  '';
+in
+{
+  systemd.user.services.vscodium-extension-control = {
+    Unit.Description = "Filtered VSCodium extension control list";
+    Service.ExecStart = "${pkgs.busybox}/bin/busybox httpd -f -p 127.0.0.1:${controlPort} -h ${controlList}";
+    Install.WantedBy = [ "default.target" ];
+  };
+
   programs.vscodium = {
     enable = true;
     mutableExtensionsDir = false;
+
+    package = pkgs.vscodium.overrideAttrs (old: {
+      nativeBuildInputs = (old.nativeBuildInputs or [ ]) ++ [ pkgs.jq ];
+      postInstall = (old.postInstall or "") + ''
+        p=$out/lib/vscode/resources/app/product.json
+        jq '.extensionsGallery.controlUrl = "http://127.0.0.1:${controlPort}/extensions.json"' "$p" > "$p.tmp" && mv "$p.tmp" "$p"
+      '';
+    });
 
     profiles.default = {
       userSettings = {
@@ -180,6 +207,7 @@
         ++ (with pkgs.vscode-marketplace; [
           atoolz.htmx-vscode-toolkit # open-vsx missing
           orta.vscode-twoslash-queries # open-vsx behind
+          typescriptteam.native-preview # open-vsx stale
         ])
       # ++ [
       #   # nightly — nix-vscode-extensions cache stale, old VSIX purged from CDN
