@@ -19,7 +19,6 @@ in {
     ./module/librewolf/default.nix
     ./module/claude/default.nix
     ./module/opencode/default.nix
-    ./module/polypane/default.nix
     ./module/ai-skills/default.nix
     ./module/cinnamon/monitors.nix
     ./module/kitty/default.nix
