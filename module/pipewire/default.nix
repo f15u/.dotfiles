@@ -1,4 +1,4 @@
-{
+{pkgs, ...}: {
   # Disable PulseAudio completely (redundant with Pipewire)
   services.pulseaudio.enable = false;
 
@@ -22,6 +22,9 @@
     # Use WirePlumber as the session manager (default and recommended)
     wireplumber.enable = true;
   };
+
+  # pactl CLI for pipewire-pulse
+  environment.systemPackages = [pkgs.pulseaudio];
 
   # Ensure systemd user services for audio are properly configured
   systemd.user.services.pipewire.wantedBy = ["default.target"];
