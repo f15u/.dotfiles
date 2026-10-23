@@ -3,7 +3,7 @@
   lib,
   ...
 }: let
-  version = "0.7.1";
+  version = "0.14.1";
   target = "x86_64-unknown-linux-gnu";
 
   # dlopen'd at run time, so absent from the binary's NEEDED entries and
@@ -18,47 +18,47 @@
     libxrandr
   ];
 
-  fastpotify = pkgs.stdenv.mkDerivation {
-    pname = "fastpotify";
+  spotifast = pkgs.stdenv.mkDerivation {
+    pname = "spotifast";
     inherit version;
 
     src = pkgs.fetchurl {
-      url = "https://github.com/crmne/fastpotify/releases/download/v${version}/fastpotify-v${version}-${target}.tar.gz";
-      hash = "sha256-Oc8i7k0IQYH83XKQrLVXjwi6Kl0qf8uuYhJPAnKNMWo=";
+      url = "https://github.com/crmne/spotifast/releases/download/v${version}/spotifast-v${version}-${target}.tar.gz";
+      hash = "sha256-+Ev6R+3RiEM7oiSxnjJuCjaLqkWaFNlBTemOWadg3Lw=";
     };
 
     nativeBuildInputs = [pkgs.autoPatchelfHook pkgs.makeWrapper];
-    buildInputs = [pkgs.stdenv.cc.cc.lib pkgs.alsa-lib pkgs.libpulseaudio];
+    buildInputs = [pkgs.stdenv.cc.cc.lib pkgs.alsa-lib pkgs.libpulseaudio pkgs.pipewire];
 
-    sourceRoot = "fastpotify-v${version}-${target}";
+    sourceRoot = "spotifast-v${version}-${target}";
 
     dontConfigure = true;
     dontBuild = true;
 
     installPhase = ''
       runHook preInstall
-      install -Dm755 fastpotify $out/bin/fastpotify
-      install -Dm644 packaging/applications/fastpotify.desktop \
-        $out/share/applications/fastpotify.desktop
-      install -Dm644 packaging/icons/fastpotify.svg \
-        $out/share/icons/hicolor/scalable/apps/fastpotify.svg
+      install -Dm755 spotifast $out/bin/spotifast
+      install -Dm644 packaging/applications/spotifast.desktop \
+        $out/share/applications/spotifast.desktop
+      install -Dm644 packaging/icons/spotifast.svg \
+        $out/share/icons/hicolor/scalable/apps/spotifast.svg
       runHook postInstall
     '';
 
     postFixup = ''
-      wrapProgram $out/bin/fastpotify \
+      wrapProgram $out/bin/spotifast \
         --prefix LD_LIBRARY_PATH : ${lib.makeLibraryPath runtimeLibs}
     '';
 
     meta = with lib; {
       description = "Fast native Spotify client with local playback and Spotify Connect";
-      homepage = "https://fastpotify.rocks";
+      homepage = "https://spotifast.rocks";
       license = licenses.mit;
       platforms = ["x86_64-linux"];
       sourceProvenance = with sourceTypes; [binaryNativeCode];
-      mainProgram = "fastpotify";
+      mainProgram = "spotifast";
     };
   };
 in {
-  home.packages = [fastpotify];
+  home.packages = [spotifast];
 }

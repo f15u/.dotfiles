@@ -23,7 +23,7 @@ in {
     ./module/cinnamon/monitors.nix
     ./module/kitty/default.nix
     ./module/ghostty/default.nix
-    ./module/fastpotify/default.nix
+    ./module/spotifast/default.nix
   ];
 
   home = {
