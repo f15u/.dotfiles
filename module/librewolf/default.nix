@@ -207,6 +207,8 @@
         "privacy.userContext.enabled" = false;
 
         "security.csp.reporting.enabled" = false;
+        # Hide "This site is not secure" dropdown warning on password fields.
+        "security.insecure_field_warning.contextual.enabled" = false;
         # Route passkey (WebAuthn) handling to password-manager extensions
         # (Bitwarden/1Password/Proton Pass) instead of the browser UI.
         # No native platform authenticator exists on Linux; the "native ask"
