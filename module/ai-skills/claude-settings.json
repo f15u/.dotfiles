@@ -14,18 +14,6 @@
           }
         ]
       }
-    ],
-    "PermissionRequest": [
-      {
-        "matcher": "ExitPlanMode",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "plannotator",
-            "timeout": 345600
-          }
-        ]
-      }
     ]
   },
   "worktree": {
@@ -37,7 +25,8 @@
   },
   "enabledPlugins": {
     "caveman@caveman": true,
-    "cc-plugin-plugin-authoring@builtin": false
+    "cc-plugin-plugin-authoring@builtin": false,
+    "plannotator@plannotator": true
   },
   "extraKnownMarketplaces": {
     "caveman": {
@@ -50,6 +39,12 @@
       "source": {
         "source": "github",
         "repo": "foldkit/foldkit"
+      }
+    },
+    "plannotator": {
+      "source": {
+        "source": "github",
+        "repo": "backnotprop/plannotator"
       }
     }
   },
