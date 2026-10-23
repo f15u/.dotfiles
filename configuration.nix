@@ -9,7 +9,7 @@
 {
   imports = [
     ./hardware-configuration.nix
-    ./module/docker/default.nix
+    ./module/1password/default.nix
     ./module/pipewire/default.nix
     ./module/blocky/default.nix
     ./module/cinnamon/default.nix
@@ -26,6 +26,8 @@
     "nvidia-drm.fbdev=1"
     "nvidia.NVreg_EnablePageAttributeTable=1"
   ];
+
+  zramSwap.enable = true;
 
   nix = {
     gc = {
@@ -118,7 +120,6 @@
     extraGroups = [
       "networkmanager"
       "wheel"
-      "docker"
     ];
     shell = pkgs.zsh;
   };
