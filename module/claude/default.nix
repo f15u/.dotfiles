@@ -9,5 +9,6 @@
     ])
     ++ (with pkgs; [
       nodejs_24 # Needed for caveman claude's skill
+      python3 # Needed for herdr's claude session hook
     ]);
 }

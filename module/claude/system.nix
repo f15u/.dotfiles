@@ -4,12 +4,60 @@
 {...}: {
   environment.etc."claude-code/managed-settings.json".text = builtins.toJSON {
     disableRemoteControl = true;
+    includeCoAuthoredBy = false;
 
     # "" hides the commit/PR attribution; sessionUrl drops the session link.
     attribution = {
       commit = "";
       pr = "";
       sessionUrl = false;
+    };
+
+    # Stable policy. Claude never writes /etc, so these survive the atomic-write
+    # bug that read-only ~/.claude/settings.json triggers. Volatile/UI-mutated
+    # keys (model, effortLevel, theme, plugins) stay in the writable user file.
+    skipAutoPermissionPrompt = true;
+    spinnerTipsEnabled = false;
+    promptSuggestionEnabled = false;
+    awaySummaryEnabled = false;
+    preferredNotifChannel = "notifications_disabled";
+    fileCheckpointingEnabled = false;
+    terminalProgressBarEnabled = false;
+    autoConnectIde = false;
+    worktree.baseRef = "fresh";
+
+    permissions = let
+      mutating = [
+        "create" "edit" "comment" "merge" "close" "reopen" "review" "delete" "ready"
+        "lock" "unlock" "transfer" "rename" "archive" "unarchive" "fork" "sync"
+        "set" "add" "remove" "run" "rerun" "cancel" "enable" "disable" "develop"
+        "update-branch" "install" "upgrade" "login" "logout" "refresh" "import"
+      ];
+      apiWriteFlags = ["-X" "--method" "-f" "-F" "--field" "--raw-field" "--input"];
+    in {
+      allow = [
+        "Bash(gh * view*)" "Bash(gh * list*)" "Bash(gh * status*)" "Bash(gh * diff*)"
+        "Bash(gh * checks*)" "Bash(gh search:*)" "Bash(gh api:*)"
+      ];
+      # ask beats allow, so mutating gh calls always prompt.
+      ask =
+        map (v: "Bash(gh * ${v}*)") mutating
+        ++ map (f: "Bash(gh api* ${f}*)") apiWriteFlags;
+    };
+
+    hooks = {
+      SessionStart = [
+        {
+          matcher = "*";
+          hooks = [
+            {
+              type = "command";
+              command = "bash '/home/f15u/.claude/hooks/herdr-agent-state.sh' session";
+              timeout = 10;
+            }
+          ];
+        }
+      ];
     };
 
     env = {
