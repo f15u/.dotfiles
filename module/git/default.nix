@@ -6,6 +6,8 @@
   # The public key is safe to commit.  NEVER export the private key.
   publicKey = ../../secrets/federico-public.asc;
 in {
+  programs.gh.enable = true;
+
   programs.git = {
     enable = true;
     lfs.enable = true;
