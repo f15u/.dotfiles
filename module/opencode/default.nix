@@ -16,7 +16,7 @@ in
 {
   home.packages = [
     agents.herdr
-    agents.pi
+    agents.plannotator
     opencode
   ];
 
@@ -34,7 +34,7 @@ in
       "$schema" = "https://opencode.ai/config.json";
       autoupdate = false;
       disabled_providers = [ "openai" "copilot" ];
-      plugins = [ "./plugins/caveman" ];
+      plugins = [ "./plugins/caveman" "@plannotator/opencode@latest" ];
     };
 
   # caveman opencode integration. Official payload lives in the repo working
