@@ -8,6 +8,10 @@
     enable = true;
     package = pkgs.librewolf-bin;
 
+    nativeMessagingHosts = with pkgs; [
+      _1password-gui
+    ];
+
     policies = {
       Certificates = {
         ImportEnterpriseRoots = true;
@@ -50,6 +54,7 @@
         "browser.chrome.guess_favicon" = false;
         "browser.discovery.containers.enabled" = false;
         "browser.fixup.alternate.enabled" = false;
+        "browser.fixup.dns_first_for_single_words" = true;
         "browser.laterrun.bookkeeping.sessionCount" = 1;
         "browser.ml.enable" = false;
         "browser.ml.chat.enabled" = false;
@@ -157,7 +162,7 @@
 
         "intl.locale.requested" = "en-GB,en-US";
 
-        "keyword.enabled" = false;
+        "keyword.enabled" = true;
 
         "image.decode-immediately.enabled" = true;
 
